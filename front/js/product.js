@@ -19,14 +19,21 @@ fetch(productURL)
     document.getElementById("description").innerText += (`${descri}`)
     document.getElementById("title").innerText += (`${data.name}`)
     document.getElementById("price").innerText += (`${data.price}`)
-})
-.then((data) => {for(let colors of data) {
+    data.colors.forEach(style => {
+        console.log(style)
+        let coloris = document.createElement("option")
+    document.getElementById("colors").appendChild(coloris);
+    coloris.innerHTML = `${style}`
+    });
+});
+
+/*.then((data) => {for(let colors of data) {
     document.getElementById("colors").innerHTML += (`<option value="vert">${data.colors}</option>
     <option value="blanc">${data.colors}</option>`)
 }
 
-}
-);
+
+);*/
 
 /*fetch(productURL) 
 .then(result => result.json())
