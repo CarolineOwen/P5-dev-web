@@ -1,8 +1,9 @@
+//cibler un produit en fonction de son ID dans l'URL
 let params = new URL(document.location).searchParams;
 let id = params.get("id");
 console.log(id);
 
-//déclarer URL Produits + /id
+//requete à l'API en fonction du produit ciblé grâce à son identifiant
 let mainURL = "http://localhost:3000/api/products/";
 
 let productURL = mainURL + id;
@@ -11,6 +12,7 @@ console.log(productURL);
 fetch(productURL)
   .then((result) => result.json())
   .then((data) => {
+      //creation des élements de manière dynamique dans le DOM
     let imag = document.createElement("img");
     document.querySelector(".item__img").appendChild(imag);
     imag.src = data.imageUrl;
@@ -24,35 +26,12 @@ fetch(productURL)
       let coloris = document.createElement("option");
       document.getElementById("colors").appendChild(coloris);
       coloris.innerHTML = `${style}`;
-    });
+    })
+  })
+  //En cas d'échec de l'appel à l'API attraper l'erreur pour empecher que javaScript bloque tout
+  .catch(function (err) {
+    console.dir(err)
+    alert("Nous n'avons pas réussi à aficher le produit demandé, veuillez nous excuser pour la gêne occasionnée")
   });
 
-/*.then((data) => {for(let colors of data) {
-    document.getElementById("colors").innerHTML += (`<option value="vert">${data.colors}</option>
-    <option value="blanc">${data.colors}</option>`)
-}
 
-
-);*/
-
-/*fetch(productURL) 
-.then(result => result.json())
-.then((data) => { for(let k in data) {
-    console.log(k);
-    let test = data[k];
-    console.log(test);
-    for(let b in k){
-        console.log(b);
-        console.log(k[name]);
-    }
-    let descri = document.getElementById("description");
-    let info = k.description;
-    console.log(info)
-descri.innerText = info;}
-    
-
-.then((data) => {for(let [key, value] of Object.entries(data)) {
-    console.log(`${data.description}`);
-}});
-
-}) */

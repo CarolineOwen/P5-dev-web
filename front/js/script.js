@@ -1,7 +1,10 @@
+//lancement et requete de l'API avec la promesse fetch
+
 fetch("http://localhost:3000/api/products")
+//retour des résultats en  format JSON
   .then((result) => result.json())
 
-  // .then((tab) => {for(let products = 0; products < tab.length; products++){}})
+  // récupération de la réponse en la parcourant pour insérer les éléments de manière dynamique dans le DOM
   .then((tab) => {
     for (let products of tab) {
       document.getElementById(
@@ -12,14 +15,13 @@ fetch("http://localhost:3000/api/products")
               <p class = "productDescription">${products.description}</p>
               </article>
               </a>`;
-      console.log(products.imageUrl);
     }
   })
-
+//En cas d'échec de l'appel à l'API attraper l'erreur pour empecher que javaScript bloque tout
   .catch(function (err) {
-    //Une erreur est survenue
+    console.dir(err)
+    alert("Nous n'avons pas réussi à aficher les produits, veuillez nous excuser pour la gêne occasionnée")
   });
 
 
-// document.write(tab[i].name);
-//}
+
