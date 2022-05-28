@@ -7,8 +7,8 @@ De plus, la gestion de l’ajout des produits au panier a été acquise lors de 
 
 # Utilisation #
 
-Prérequis: node et npm doivent être installés sur votre ordinateur
-Cloner le repo
-Depuis le dossier back exéctuer la commande: npm install
-Ensuite lancer la commande: node server
+Prérequis: node et npm doivent être installés sur votre ordinateur /
+Cloner le repo /
+Depuis le dossier back exéctuer la commande: npm install /
+Ensuite lancer la commande: node server /
 Le serveur doit fonctionner sur localhost avec le port 3000
