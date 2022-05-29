@@ -7,7 +7,7 @@ console.log(id);
 let mainURL = "http://localhost:3000/api/products/";
 
 let productURL = mainURL + id;
-console.log(productURL);
+console.log(productURL)
 
 
 fetch(productURL)
