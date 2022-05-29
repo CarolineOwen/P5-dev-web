@@ -72,9 +72,8 @@ function addBasket(produitChoisi){
     let basket = getBasket();
     let foundProduct = basket.find(p => p.idAndColor == produitChoisi.idAndColor);
     if(foundProduct != undefined){
-        foundProduct.quantite++;
+        foundProduct.quantite += qty;
     }else{
-        produitChoisi.quantite=1;
         basket.push(produitChoisi);
     }
     saveBasket(basket);
