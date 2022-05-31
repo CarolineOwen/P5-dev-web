@@ -29,7 +29,7 @@ fetch(productURL)
       coloris.innerHTML = `${style}`;
     })
     //appel de la fonction (définie plus bas) qui ajoute les produits au panier au clic
-    addBasket1();
+    addBasket1();   
   })
   //En cas d'échec de l'appel à l'API attraper l'erreur pour empecher que javaScript bloque tout
   .catch(function (err) {
@@ -80,6 +80,7 @@ function addBasket(produitChoisi){
 }
 
 addBasket(produitChoisi);
+alert("Le produit a été correctement ajouté au panier");
 } )
 };
 

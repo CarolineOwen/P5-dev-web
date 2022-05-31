@@ -1,15 +1,17 @@
 // récupérer les produits du local storage
 let panier = JSON.parse(localStorage.getItem("basket"));
 console.log(panier);
+
+//itéter sur chaque produit du local storage et récupérer l'id de chaque produit
 for(let i of panier){
     let id = i.id;
     console.log(id);
 
 let mainURL = "http://localhost:3000/api/products/";
-
 let productURL = mainURL + id;
 console.log(productURL);
-    
+
+//appel à l'API + id pour récupérer les données manquantes au local storage et les ajouter au DOM dynamiquement    
 fetch(productURL)
 .then((result) => result.json())
 .then((data) => {
@@ -35,21 +37,25 @@ document.getElementById("cart__items").innerHTML += `<article class="cart__item"
   </div>
 </div>
 </article>`;
-let prices = data.price * i.quantite
-let totalPrice = 0;
+//formule pour obtenir le prix total de chaque canapé en fonction de sa quantité
+let quantiteLigne = data.price * i.quantite;
+console.log(quantiteLigne);//ok ça fonctionne
+
+//essaye d'avoir le total price en additionnant le total de chaque article
+//ne fonctionne pas
+document.getElementById("totalPrice").innerHTML += quantiteLigne;
+})
+}
+;
+
+//formule pour obtenir la quantité totale de tout mes article
 let totalQuantity = 0;
 for(let i of panier) {
-totalQuantity += (i.quantite);
-totalPrice += (prices);
-document.getElementById("totalQuantity").innerHTML = `${totalQuantity}`;
-document.getElementById("totalPrice").innerHTML = `${totalPrice}`
+  totalQuantity += (i.quantite);
+  console.log(totalQuantity);
 }
-
-})
-};
-
-
-
+document.getElementById("totalQuantity").innerHTML = `${totalQuantity}`;//ok ça fonctionne
+ 
 
 
 
