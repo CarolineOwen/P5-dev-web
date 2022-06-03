@@ -2,20 +2,25 @@
 let panier = JSON.parse(localStorage.getItem("basket"));
 console.log(panier);
 
+let total = 0;
+
 //itéter sur chaque produit du local storage et récupérer l'id de chaque produit
-for(let i of panier){
-    let id = i.id;
-    console.log(id);
 
-let mainURL = "http://localhost:3000/api/products/";
-let productURL = mainURL + id;
-console.log(productURL);
+for (let i of panier) {
+  let id = i.id;
+  console.log(id);
 
-//appel à l'API + id pour récupérer les données manquantes au local storage et les ajouter au DOM dynamiquement    
-fetch(productURL)
-.then((result) => result.json())
-.then((data) => {
-document.getElementById("cart__items").innerHTML += `<article class="cart__item" data-id="${i.id}" data-color="${i.colori}">
+  let mainURL = "http://localhost:3000/api/products/";
+  let productURL = mainURL + id;
+  console.log(productURL);
+
+  //appel à l'API + id pour récupérer les données manquantes au local storage et les ajouter au DOM dynamiquement
+  fetch(productURL)
+    .then((result) => result.json())
+    .then((data) => {
+      document.getElementById(
+        "cart__items"
+      ).innerHTML += `<article class="cart__item" data-id="${i.id}" data-color="${i.colori}">
 <div class="cart__item__img">
   <img src="${data.imageUrl}" alt="Photographie d'un canapé">
 </div>
@@ -37,25 +42,139 @@ document.getElementById("cart__items").innerHTML += `<article class="cart__item"
   </div>
 </div>
 </article>`;
-//formule pour obtenir le prix total de chaque canapé en fonction de sa quantité
-let quantiteLigne = data.price * i.quantite;
-console.log(quantiteLigne);//ok ça fonctionne
+      //formule pour obtenir le prix total de chaque canapé en fonction de sa quantité
+      
+      //ok ça fonctionne
+      total += data.price * i.quantite;
+      console.log(total);
+      document.getElementById("totalPrice").innerHTML = total;
+      //essaye d'avoir le total price en additionnant le total de chaque article
+      //ne fonctionne pas
+      
+      let supprimer = document.querySelectorAll(".deleteItem");
+      console.log(supprimer);
 
-//essaye d'avoir le total price en additionnant le total de chaque article
-//ne fonctionne pas
-document.getElementById("totalPrice").innerHTML += quantiteLigne;
-})
-}
-;
+      for (let l=0; l < supprimer.length ; l++){
+        supprimer[l].addEventListener("click", (event) =>{
+          event.preventDefault();
+          console.log("coucou");
+          let supprimerId = panier[l].idAndColor;
+          console.log(supprimerId);
+          panier = panier.filter (el => el.idAndColor !== supprimerId);
+          console.log(panier);
+          localStorage.setItem("basket", JSON.stringify(panier));
+          alert("ce produit a été supprimé");
+          window.location.href = "cart.html";
+        })
+
+        let plus = document.querySelectorAll(".itemQuantity");
+      console.log(supprimer);
+
+      for (let l=0; l < supprimer.length ; l++){
+        supprimer[l].addEventListener("click", (event) =>{
+          event.preventDefault();
+          console.log("coucou");
+          let supprimerId = panier[l].idAndColor;
+          console.log(supprimerId);
+          panier = panier.filter (el => el.idAndColor !== supprimerId);
+          console.log(panier);
+          localStorage.setItem("basket", JSON.stringify(panier));
+          alert("ce produit a été supprimé");
+          window.location.href = "cart.html";
+        })
+
+      }
+    })
+  }
 
 //formule pour obtenir la quantité totale de tout mes article
 let totalQuantity = 0;
-for(let i of panier) {
-  totalQuantity += (i.quantite);
+for (let i of panier) {
+  totalQuantity += i.quantite;
   console.log(totalQuantity);
 }
-document.getElementById("totalQuantity").innerHTML = `${totalQuantity}`;//ok ça fonctionne
- 
+document.getElementById("totalQuantity").innerHTML = `${totalQuantity}`; //ok ça fonctionne
+
+
+//bouton supprimer
+//function removeFromBasket(product)
+/*const plusQuantite = async (panier) => {
+  await panier;
+  console.log("fonction plus");
+  let plus = document.querySelectorAll(".itemQuantity");
+  console.log(plus);
+  plus.forEach((positive) => {
+
+positive.addEventListener("click", () =>
+console.log(positive));
+console.log(panier);
+
+}
+
+  })
+}
 
 
 
+function saveBasket(basket) {
+  localStorage.setItem("basket", JSON.stringify(basket));
+}
+
+function removeFromBasket(product){
+  let panier = JSON.parse(localStorage.getItem("basket"));
+  console.log(panier);
+  panier = panier.filter(p => p.id != product.id);
+  saveBasket(basket);
+}
+
+
+let boutonSupprimer = document.querySelectorAll(".itemQuantity");
+      console.log(boutonSupprimer);*/
+      
+     
+      /*function saveBasket(panier) {
+        localStorage.setItem("basket", JSON.stringify(panier));
+        console.log(saveBasket);
+      }
+      
+      function getBasket() {
+        let panier = localStorage.getItem("basket");
+        if (panier == null) {
+          return [];
+        } else {
+          return JSON.parse(panier);
+        }
+      }
+      
+      function addBasket (product){
+        let panier = getBasket();
+        let foundProduct = panier.find(p => p.id == product.id);
+        if (foundProduct != undefined){
+          foundProduct.quantite++;
+        }else {
+          product.quantite =1;
+          panier.push(product);
+        }
+        
+        saveBasket(panier);
+      }
+      
+      function removeFromBasket(product){
+        let panier = getBasket;
+      let supprimer = document.querySelectorAll(".deleteItem");
+      for (let l of supprimer){
+      l.addEventListener("click", () => {
+        
+        panier = panier.filter(p => p.id != product.id);
+        saveBasket(panier);
+        document.location.reload();
+      
+
+        
+      })}}*/
+     /* supprimer.forEach((elements) => {
+elements.addEventListener("click", (event) => {
+  event.preventDefault();
+console.log("coucou");
+
+})})*/

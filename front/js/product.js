@@ -7,13 +7,12 @@ console.log(id);
 let mainURL = "http://localhost:3000/api/products/";
 
 let productURL = mainURL + id;
-console.log(productURL)
-
+console.log(productURL);
 
 fetch(productURL)
   .then((result) => result.json())
   .then((data) => {
-      //creation des élements de manière dynamique dans le DOM
+    //creation des élements de manière dynamique dans le DOM
     let imag = document.createElement("img");
     document.querySelector(".item__img").appendChild(imag);
     imag.src = data.imageUrl;
@@ -27,20 +26,22 @@ fetch(productURL)
       let coloris = document.createElement("option");
       document.getElementById("colors").appendChild(coloris);
       coloris.innerHTML = `${style}`;
-    })
+    });
     //appel de la fonction (définie plus bas) qui ajoute les produits au panier au clic
-    addBasket1();   
+    addBasket1();
   })
   //En cas d'échec de l'appel à l'API attraper l'erreur pour empecher que javaScript bloque tout
   .catch(function (err) {
-    console.dir(err)
-    alert("Nous n'avons pas réussi à aficher le produit demandé, veuillez nous excuser pour la gêne occasionnée")
+    console.dir(err);
+    alert(
+      "Nous n'avons pas réussi à aficher le produit demandé, veuillez nous excuser pour la gêne occasionnée"
+    );
   });
 
 //ajout des produits au panier au clic via le local Storage
 function addBasket1() {
-let bouton = document.getElementById("addToCart");
-bouton.addEventListener('click', () => {
+  let bouton = document.getElementById("addToCart");
+  bouton.addEventListener("click", () => {
     let select = document.getElementById("colors").value;
     console.log(select);
     let qty = parseInt(document.getElementById("quantity").value);
@@ -48,42 +49,40 @@ bouton.addEventListener('click', () => {
     let identifiant = id;
     console.log(identifiant);
     let produitChoisi = {
-        id: identifiant,
-        idAndColor:identifiant+select,
-        colori: select,
-        quantite: qty,
-    }
+      id: identifiant,
+      idAndColor: identifiant + select,
+      colori: select,
+      quantite: qty,
+    };
     console.log(produitChoisi);
-    
-function saveBasket(basket){ 
-    localStorage.setItem("basket", JSON.stringify(basket));
-}
 
-function getBasket(){
-    let basket = localStorage.getItem("basket");
-    if (basket == null){
+    function saveBasket(basket) {
+      localStorage.setItem("basket", JSON.stringify(basket));
+    }
+
+    function getBasket() {
+      let basket = localStorage.getItem("basket");
+      if (basket == null) {
         return [];
-    }else {
+      } else {
         return JSON.parse(basket);
+      }
     }
-}
 
-function addBasket(produitChoisi){
-    let basket = getBasket();
-    let foundProduct = basket.find(p => p.idAndColor == produitChoisi.idAndColor);
-    if(foundProduct != undefined){
+    function addBasket(produitChoisi) {
+      let basket = getBasket();
+      let foundProduct = basket.find(
+        (p) => p.idAndColor == produitChoisi.idAndColor
+      );
+      if (foundProduct != undefined) {
         foundProduct.quantite += qty;
-    }else{
+      } else {
         basket.push(produitChoisi);
+      }
+      saveBasket(basket);
     }
-    saveBasket(basket);
+
+    addBasket(produitChoisi);
+    alert("Le produit a été correctement ajouté au panier");
+  });
 }
-
-addBasket(produitChoisi);
-alert("Le produit a été correctement ajouté au panier");
-} )
-};
-
-
-
-
