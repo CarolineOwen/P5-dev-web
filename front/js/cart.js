@@ -42,65 +42,59 @@ for (let i of panier) {
   </div>
 </div>
 </article>`;
-      //formule pour obtenir le prix total de chaque canapé en fonction de sa quantité
-      
-      //ok ça fonctionne
+
+//formule pour obtenir le prix total du panier
       total += data.price * i.quantite;
       console.log(total);
       document.getElementById("totalPrice").innerHTML = total;
-      //essaye d'avoir le total price en additionnant le total de chaque article
-      //ne fonctionne pas
 
-      let itemQtt = document.getElementsByClassName("itemQuantity");
-      totalQtt = 0;
-  
-      for (let i = 0; i < itemQtt.length; ++i) {
-          totalQtt += itemQtt[i].valueAsNumber;
-      }
-   
-   document.getElementById("totalQuantity").innerHTML = totalQtt;
-     
-      textB();
-      testA();
-    })
+      totalQuantite();
+      supprimerUnProduit();
+      modificationQuantite();
+    });
+}
+
+
+
+//formule pour obtenir la quantité totale de tous mes article
+function totalQuantite() {
+  let itemQtt = document.getElementsByClassName("itemQuantity");
+  totalQtt = 0;
+
+  for (let i = 0; i < itemQtt.length; ++i) {
+    totalQtt += itemQtt[i].valueAsNumber;
   }
 
-//formule pour obtenir la quantité totale de tout mes article
- //ok ça fonctionne
- 
+  document.getElementById("totalQuantity").innerHTML = totalQtt;
+}
 
-
-
-function textB(){
+//formule pour supprimer un produit du panier
+function supprimerUnProduit() {
   let supprimer = document.querySelectorAll(".deleteItem");
   console.log(supprimer);
 
-  for (let l=0; l < supprimer.length ; l++){
-    supprimer[l].addEventListener("click", (event) =>{
+  for (let l = 0; l < supprimer.length; l++) {
+    supprimer[l].addEventListener("click", (event) => {
       event.preventDefault();
       console.log("coucou");
       let supprimerId = panier[l].idAndColor;
       console.log(supprimerId);
-      panier = panier.filter (el => el.idAndColor !== supprimerId);
+      panier = panier.filter((el) => el.idAndColor !== supprimerId);
       console.log(panier);
       localStorage.setItem("basket", JSON.stringify(panier));
       location.reload();
-    })
+    });
+  }
+}
 
-    
-
-  }}
-
-
-
-function testA(){
+//formule pour modifier la quantité d'un produit dans le panier
+function modificationQuantite() {
   let plus = document.querySelectorAll(".itemQuantity");
   console.log(plus);
 
-  for (let p=0; p < plus.length ; p++){
-    plus[p].addEventListener("change", (event) =>{
+  for (let p = 0; p < plus.length; p++) {
+    plus[p].addEventListener("change", (event) => {
       event.preventDefault();
-      console.log("coucou");
       let plusId = panier[p].quantite;
       console.log(plusId);
       let plusModifQty = plus[p].value;
@@ -109,91 +103,7 @@ function testA(){
       resultFind.quantite = plusModifQty;
       panier[p].quantite = resultFind.quantite;
       localStorage.setItem("basket", JSON.stringify(panier));
-    location.reload();
-    })}
-
-  
-
+      location.reload();
+    });
+  }
 }
-//bouton supprimer
-//function removeFromBasket(product)
-/*const plusQuantite = async (panier) => {
-  await panier;
-  console.log("fonction plus");
-  let plus = document.querySelectorAll(".itemQuantity");
-  console.log(plus);
-  plus.forEach((positive) => {
-
-positive.addEventListener("click", () =>
-console.log(positive));
-console.log(panier);
-
-}
-
-  })
-}
-
-
-
-function saveBasket(basket) {
-  localStorage.setItem("basket", JSON.stringify(basket));
-}
-
-function removeFromBasket(product){
-  let panier = JSON.parse(localStorage.getItem("basket"));
-  console.log(panier);
-  panier = panier.filter(p => p.id != product.id);
-  saveBasket(basket);
-}
-
-
-let boutonSupprimer = document.querySelectorAll(".itemQuantity");
-      console.log(boutonSupprimer);*/
-      
-     
-      /*function saveBasket(panier) {
-        localStorage.setItem("basket", JSON.stringify(panier));
-        console.log(saveBasket);
-      }
-      
-      function getBasket() {
-        let panier = localStorage.getItem("basket");
-        if (panier == null) {
-          return [];
-        } else {
-          return JSON.parse(panier);
-        }
-      }
-      
-      function addBasket (product){
-        let panier = getBasket();
-        let foundProduct = panier.find(p => p.id == product.id);
-        if (foundProduct != undefined){
-          foundProduct.quantite++;
-        }else {
-          product.quantite =1;
-          panier.push(product);
-        }
-        
-        saveBasket(panier);
-      }
-      
-      function removeFromBasket(product){
-        let panier = getBasket;
-      let supprimer = document.querySelectorAll(".deleteItem");
-      for (let l of supprimer){
-      l.addEventListener("click", () => {
-        
-        panier = panier.filter(p => p.id != product.id);
-        saveBasket(panier);
-        document.location.reload();
-      
-
-        
-      })}}*/
-     /* supprimer.forEach((elements) => {
-elements.addEventListener("click", (event) => {
-  event.preventDefault();
-console.log("coucou");
-
-})})*/

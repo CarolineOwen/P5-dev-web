@@ -67,3 +67,85 @@ document.getElementById("totalQuantity").innerHTML = `${totalQuantity}`; //ok ç
 //bouton supprimer
 let boutonSupprimer = document.querySelectorAll(".delateItem");
       console.log(boutonSupprimer);*/
+      //bouton supprimer
+//function removeFromBasket(product)
+/*const plusQuantite = async (panier) => {
+  await panier;
+  console.log("fonction plus");
+  let plus = document.querySelectorAll(".itemQuantity");
+  console.log(plus);
+  plus.forEach((positive) => {
+
+positive.addEventListener("click", () =>
+console.log(positive));
+console.log(panier);
+
+}
+
+  })
+}
+
+
+
+function saveBasket(basket) {
+  localStorage.setItem("basket", JSON.stringify(basket));
+}
+
+function removeFromBasket(product){
+  let panier = JSON.parse(localStorage.getItem("basket"));
+  console.log(panier);
+  panier = panier.filter(p => p.id != product.id);
+  saveBasket(basket);
+}
+
+
+let boutonSupprimer = document.querySelectorAll(".itemQuantity");
+      console.log(boutonSupprimer);*/
+
+/*function saveBasket(panier) {
+        localStorage.setItem("basket", JSON.stringify(panier));
+        console.log(saveBasket);
+      }
+      
+      function getBasket() {
+        let panier = localStorage.getItem("basket");
+        if (panier == null) {
+          return [];
+        } else {
+          return JSON.parse(panier);
+        }
+      }
+      
+      function addBasket (product){
+        let panier = getBasket();
+        let foundProduct = panier.find(p => p.id == product.id);
+        if (foundProduct != undefined){
+          foundProduct.quantite++;
+        }else {
+          product.quantite =1;
+          panier.push(product);
+        }
+        
+        saveBasket(panier);
+      }
+      
+      function removeFromBasket(product){
+        let panier = getBasket;
+      let supprimer = document.querySelectorAll(".deleteItem");
+      for (let l of supprimer){
+      l.addEventListener("click", () => {
+        
+        panier = panier.filter(p => p.id != product.id);
+        saveBasket(panier);
+        document.location.reload();
+      
+
+        
+      })}}*/
+/* supprimer.forEach((elements) => {
+elements.addEventListener("click", (event) => {
+  event.preventDefault();
+console.log("coucou");
+
+})})*/
+
