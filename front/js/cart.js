@@ -50,52 +50,71 @@ for (let i of panier) {
       document.getElementById("totalPrice").innerHTML = total;
       //essaye d'avoir le total price en additionnant le total de chaque article
       //ne fonctionne pas
-      
-      let supprimer = document.querySelectorAll(".deleteItem");
-      console.log(supprimer);
 
-      for (let l=0; l < supprimer.length ; l++){
-        supprimer[l].addEventListener("click", (event) =>{
-          event.preventDefault();
-          console.log("coucou");
-          let supprimerId = panier[l].idAndColor;
-          console.log(supprimerId);
-          panier = panier.filter (el => el.idAndColor !== supprimerId);
-          console.log(panier);
-          localStorage.setItem("basket", JSON.stringify(panier));
-          alert("ce produit a été supprimé");
-          window.location.href = "cart.html";
-        })
-
-        let plus = document.querySelectorAll(".itemQuantity");
-      console.log(supprimer);
-
-      for (let l=0; l < supprimer.length ; l++){
-        supprimer[l].addEventListener("click", (event) =>{
-          event.preventDefault();
-          console.log("coucou");
-          let supprimerId = panier[l].idAndColor;
-          console.log(supprimerId);
-          panier = panier.filter (el => el.idAndColor !== supprimerId);
-          console.log(panier);
-          localStorage.setItem("basket", JSON.stringify(panier));
-          alert("ce produit a été supprimé");
-          window.location.href = "cart.html";
-        })
-
+      let itemQtt = document.getElementsByClassName("itemQuantity");
+      totalQtt = 0;
+  
+      for (let i = 0; i < itemQtt.length; ++i) {
+          totalQtt += itemQtt[i].valueAsNumber;
       }
+   
+   document.getElementById("totalQuantity").innerHTML = totalQtt;
+     
+      textB();
+      testA();
     })
   }
 
 //formule pour obtenir la quantité totale de tout mes article
-let totalQuantity = 0;
-for (let i of panier) {
-  totalQuantity += i.quantite;
-  console.log(totalQuantity);
+ //ok ça fonctionne
+ 
+
+
+
+function textB(){
+  let supprimer = document.querySelectorAll(".deleteItem");
+  console.log(supprimer);
+
+  for (let l=0; l < supprimer.length ; l++){
+    supprimer[l].addEventListener("click", (event) =>{
+      event.preventDefault();
+      console.log("coucou");
+      let supprimerId = panier[l].idAndColor;
+      console.log(supprimerId);
+      panier = panier.filter (el => el.idAndColor !== supprimerId);
+      console.log(panier);
+      localStorage.setItem("basket", JSON.stringify(panier));
+      location.reload();
+    })
+
+    
+
+  }}
+
+
+
+function testA(){
+  let plus = document.querySelectorAll(".itemQuantity");
+  console.log(plus);
+
+  for (let p=0; p < plus.length ; p++){
+    plus[p].addEventListener("change", (event) =>{
+      event.preventDefault();
+      console.log("coucou");
+      let plusId = panier[p].quantite;
+      console.log(plusId);
+      let plusModifQty = plus[p].value;
+      console.log(plusModifQty);
+      const resultFind = panier.find((el) => el.plusModifQty !== plusId);
+      resultFind.quantite = plusModifQty;
+      panier[p].quantite = resultFind.quantite;
+      localStorage.setItem("basket", JSON.stringify(panier));
+    location.reload();
+    })}
+
+  
+
 }
-document.getElementById("totalQuantity").innerHTML = `${totalQuantity}`; //ok ça fonctionne
-
-
 //bouton supprimer
 //function removeFromBasket(product)
 /*const plusQuantite = async (panier) => {
