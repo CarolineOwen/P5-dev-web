@@ -107,3 +107,87 @@ function modificationQuantite() {
     });
   }
 }
+
+
+//Formulaire//
+let form = document.querySelector(".cart__order__form");
+console.log(form);
+
+form.firstName.addEventListener('change', function(){
+  validFisrtName(this);
+});
+
+form.lastName.addEventListener('change', function(){
+  validLastName(this);
+});
+
+form.address.addEventListener('change', function(){
+  validAddress(this);
+});
+
+form.city.addEventListener('change', function(){
+  validCity(this);
+});
+
+form.email.addEventListener('change', function(){
+  validEmail(this);
+});
+
+// const prenom//
+const validFisrtName = function(inputFirstName){
+  let firstNameRegExp = new RegExp("^[a-zA-Z\é\è\-]{3,25}$")
+  let testName = firstNameRegExp.test(inputFirstName.value);
+  let error = document.getElementById("firstNameErrorMsg");
+  if (testName){
+    error.innerHTML = "prénom valide"
+  }else{error.innerHTML = "prénom  non valide";
+
+  }
+}
+// const nom 
+const validLastName = function(inputLastName){
+  let lastNameRegExp = new RegExp("^[a-zA-Z\é\è\-]{3,25}$")
+  let testLastName = lastNameRegExp.test(inputLastName.value);
+  let error = document.getElementById("lastNameErrorMsg");
+  if (testLastName){
+    error.innerHTML = "nom valide"
+  }else{error.innerHTML = "nom  non valide";
+
+  }
+}
+
+// const adresse = document.getElementById("address");
+const validAddress = function(inputAddress){
+  let addressRegExp = new RegExp("^[A-Za-z0-9 *]+$")
+  let testAddress = addressRegExp.test(inputAddress.value);
+  let error = document.getElementById("addressErrorMsg");
+  if (testAddress){
+    error.innerHTML = "adresse valide"
+  }else{error.innerHTML = "adresse non valide";
+
+  }}
+// const ville
+const validCity = function(inputCity){
+  let cityRegExp = new RegExp("^[a-zA-Z]{1,50}$")
+  let testCity = cityRegExp.test(inputCity.value);
+  let error = document.getElementById("cityErrorMsg");
+  if (testCity){
+    error.innerHTML = "ville valide"
+  }else{error.innerHTML = "ville non valide";
+
+  }
+}
+  
+// const mail 
+const validEmail = function(inputEmail){
+  let emailRegExp = new RegExp("^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z]+[.]{1}[a-z]{2,10}$")
+  let testEmail = emailRegExp.test(inputEmail.value);
+  let error = document.getElementById("emailErrorMsg");
+  if (testEmail){
+    error.innerHTML = "email valide"
+  }else{error.innerHTML = "email non valide";
+
+  }
+}
+
+// const commande = document.getElementById("oder");
