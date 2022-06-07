@@ -229,8 +229,18 @@ const options = {
 };
 
 fetch("http://localhost:3000/api/products/order", options)
-console.log(fetch);
 
+.then((result) => result.json())
+.then((data) =>{
+  console.log(data);
+console.log(data.orderId);
+localStorage.setItem("orderId", data.orderId);
+window.location = "confirmation.html";
+})
+  .catch(function (err) {
+    console.dir(err)
+    alert("Une erreur est survenue, veuillez nous excuser pour la gêne occasionnée")
+})
   
 });
 
