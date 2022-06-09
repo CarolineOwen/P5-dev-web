@@ -18,9 +18,11 @@ fetch("http://localhost:3000/api/products")
               </a>`;
     }
   })
-  
+
   //En cas d'échec de l'appel à l'API, attraper l'erreur pour empecher que javaScript bloque tout
   .catch(function (err) {
     console.dir(err);
-    alert("Nous n'avons pas réussi à aficher les produits, veuillez nous excuser pour la gêne occasionnée")
+    document.getElementById(
+      "items"
+    ).innerHTML = `<h3>"Nous n'avons pas réussi à aficher les produits, veuillez nous excuser pour la gêne occasionnée"</h3>`;
   });

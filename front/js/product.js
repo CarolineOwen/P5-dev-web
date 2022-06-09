@@ -7,7 +7,6 @@ console.log(id);
 let mainURL = "http://localhost:3000/api/products/";
 let productURL = "http://localhost:3000/api/products/" + id;
 
-
 fetch(productURL)
   .then((result) => result.json())
   .then((data) => {
@@ -33,15 +32,15 @@ fetch(productURL)
   //En cas d'échec de l'appel à l'API attraper l'erreur pour empecher que javaScript bloque tout
   .catch(function (err) {
     console.dir(err);
-  alert(
-      "Nous n'avons pas réussi à aficher le produit demandé, veuillez nous excuser pour la gêne occasionnée"
-    );
+    document.querySelector(
+      ".item"
+    ).innerHTML = `<h3>Nous n'avons pas réussi à aficher le produit demandé, veuillez nous excuser pour la gêne occasionnée</h3>`;
   });
 
 //fonction qui ajoute des produits au panier au clic via le local Storage
 function clicAddBasket() {
   let bouton = document.getElementById("addToCart");
-  //on écoute le clic qui déclenche les actions pour enregistré le produit sélectionné dans le local storage
+  //on écoute le clic qui déclenche les actions pour enregistrer le produit sélectionné dans le local storage
   bouton.addEventListener("click", () => {
     let select = document.getElementById("colors").value;
     let qty = parseInt(document.getElementById("quantity").value);
@@ -53,11 +52,11 @@ function clicAddBasket() {
       colori: select,
       quantite: qty,
     };
-//enregistrer le panier dans le local storage
+    //enregistrer le panier dans le local storage
     function saveBasket(basket) {
       localStorage.setItem("basket", JSON.stringify(basket));
     }
-//recuperer le panier localStorage
+    //recuperer le panier localStorage
     function getBasket() {
       let basket = localStorage.getItem("basket");
       //si le panier est vide renvoyer un tableau vide
@@ -68,7 +67,7 @@ function clicAddBasket() {
         return JSON.parse(basket);
       }
     }
-//pour ajouter un produit au panier
+    //pour ajouter un produit au panier
     function addBasket(produitChoisi) {
       //on récupère le panier du LS
       let basket = getBasket();
@@ -87,6 +86,11 @@ function clicAddBasket() {
     }
 
     addBasket(produitChoisi);
-   alert("Le produit a été correctement ajouté au panier");
+    let newElt = document.createElement("div");
+    document
+      .querySelector(".item__content__settings__quantity")
+      .appendChild(newElt);
+    newElt.innerHTML = `<br><h3>Le produit a été correctement ajouté au panier</h3>`;
+    // alert("Le produit a été correctement ajouté au panier");
   });
 }

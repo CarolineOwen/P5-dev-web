@@ -1,27 +1,24 @@
 // récupérer les produits du local storage
 let panier = JSON.parse(localStorage.getItem("basket"));
-console.log(panier);
 
 let total = 0;
-
-//itérer sur chaque produit du local storage et récupérer l'id de chaque produit
-//vérifier que quelque chose soit dans le if panier.lenght>0 / else afficher le panier est vide
-
-for (let i of panier) {
-  let id = i.id;
-  console.log(id);
-
-  let mainURL = "http://localhost:3000/api/products/";
-  let productURL = mainURL + id;
-  console.log(productURL);
-
-  //appel à l'API + id pour récupérer les données manquantes au local storage et les ajouter au DOM dynamiquement
-  fetch(productURL)
-    .then((result) => result.json())
-    .then((data) => {
-      document.getElementById(
-        "cart__items"
-      ).innerHTML += `<article class="cart__item" data-id="${i.id}" data-color="${i.colori}">
+//si le panier est vide, un message indique à l'utilisateur d'ajouter un article au panier
+if (panier === null || panier == 0 || panier == undefined) {
+  let vide = document.getElementById("cart__items");
+  vide.innerHTML = `<h3>Veuillez ajouter au moins un article au panier</h3>`;
+} else {
+  //sinon itérer sur chaque produit du panier et récupérer leur id
+  for (let i of panier) {
+    let id = i.id;
+    let mainURL = "http://localhost:3000/api/products/";
+    let productURL = mainURL + id;
+    //appel à l'API + id pour récupérer les données manquantes du local storage et les ajouter au DOM dynamiquement
+    fetch(productURL)
+      .then((result) => result.json())
+      .then((data) => {
+        document.getElementById(
+          "cart__items"
+        ).innerHTML += `<article class="cart__item" data-id="${i.id}" data-color="${i.colori}">
 <div class="cart__item__img">
   <img src="${data.imageUrl}" alt="Photographie d'un canapé">
 </div>
@@ -44,18 +41,18 @@ for (let i of panier) {
 </div>
 </article>`;
 
-      //formule pour obtenir le prix total du panier
-      total += data.price * i.quantite;
-      console.log(total);
-      document.getElementById("totalPrice").innerHTML = total;
-
-      totalQuantite();
-      supprimerUnProduit();
-      modificationQuantite();
-    });
+        //formule pour obtenir la quantité et le prix total du panier avec la variable total qu'on a défini au début du document
+        total += data.price * i.quantite;
+        document.getElementById("totalPrice").innerHTML = total;
+        totalQuantite();
+        //ajout des fonctions pour pouvoir supprimer ou modifier un produit
+        supprimerUnProduit();
+        modificationQuantite();
+      });
+  }
 }
 
-//formule pour obtenir la quantité totale de tous mes article
+//fonction pour obtenir la quantité totale de tous mes article
 function totalQuantite() {
   let itemQtt = document.getElementsByClassName("itemQuantity");
   totalQtt = 0;
@@ -67,7 +64,7 @@ function totalQuantite() {
   document.getElementById("totalQuantity").innerHTML = totalQtt;
 }
 
-//formule pour supprimer un produit du panier
+//fonction pour supprimer un produit du panier
 function supprimerUnProduit() {
   let supprimer = document.querySelectorAll(".deleteItem");
   console.log(supprimer);
@@ -86,7 +83,7 @@ function supprimerUnProduit() {
   }
 }
 
-//formule pour modifier la quantité d'un produit dans le panier
+//fonction pour modifier la quantité d'un produit dans le panier
 function modificationQuantite() {
   let plus = document.querySelectorAll(".itemQuantity");
   console.log(plus);
@@ -107,10 +104,10 @@ function modificationQuantite() {
   }
 }
 
-console.log(panier);
+// DEUXIEME PARTIE FORMULAIRE
+//CONTROLE DES CHAMPS
 
-// const prenom//
-
+// const prenom
 const validFisrtName = function (inputFirstName) {
   let firstNameRegExp = new RegExp("^[a-zA-Zéè-]{3,25}$");
   let testName = firstNameRegExp.test(inputFirstName.value);
@@ -119,12 +116,12 @@ const validFisrtName = function (inputFirstName) {
     error.innerHTML = "prénom valide";
     return true;
   } else {
-    error.innerHTML = "prénom  non valide";
+    error.innerHTML = "erreur, uniquement les lettres sont acceptées";
     return false;
   }
 };
-// const nom
 
+// const nom
 const validLastName = function (inputLastName) {
   let lastNameRegExp = new RegExp("^[a-zA-Zéè-]{3,25}$");
   let testLastName = lastNameRegExp.test(inputLastName.value);
@@ -133,15 +130,16 @@ const validLastName = function (inputLastName) {
     error.innerHTML = "nom valide";
     return true;
   } else {
-    error.innerHTML = "nom  non valide";
+    error.innerHTML = "erreur, uniquement les lettres sont acceptées";
     return false;
   }
 };
 
 // const adresse
-
 const validAddress = function (inputAddress) {
-  let addressRegExp = new RegExp("^[A-Za-z0-9\\s*]+$");
+  let addressRegExp = new RegExp(
+    "^[A-Za-z0-9]{1,20}[\\s]{1}[A-Za-z0-9]{1,20}[a-zA-Z\\s]+$"
+  );
   let testAddress = addressRegExp.test(inputAddress.value);
   let error = document.getElementById("addressErrorMsg");
   if (testAddress) {
@@ -154,16 +152,15 @@ const validAddress = function (inputAddress) {
 };
 
 // const ville
-
 const validCity = function (inputCity) {
-  let cityRegExp = new RegExp("^[a-zA-Z]{1,50}$");
+  let cityRegExp = new RegExp("^[a-zA-Z\\s]{1,50}$");
   let testCity = cityRegExp.test(inputCity.value);
   let error = document.getElementById("cityErrorMsg");
   if (testCity) {
     error.innerHTML = "ville valide";
     return true;
   } else {
-    error.innerHTML = "ville non valide";
+    error.innerHTML = "erreur, uniquement les lettres sont acceptées";
     return false;
   }
 };
@@ -179,12 +176,12 @@ const validEmail = function (inputEmail) {
     error.innerHTML = "email valide";
     return true;
   } else {
-    error.innerHTML = "email non valide";
+    error.innerHTML = "erreur, veuillez respecter le format email avec un @";
     return false;
   }
 };
 
-//Formulaire vérification des champs//
+//Formulaire vérification des champs au moment du remplissage//
 let form = document.querySelector(".cart__order__form");
 console.log(form);
 
@@ -215,18 +212,20 @@ form.addEventListener("submit", function (e) {
   }
 });
 
-// Au clic pour passer commande
+// Ecoute du bouton au clic pour passer commande
 const boutonForm = document.querySelector("#order");
 boutonForm.addEventListener("click", (e) => {
   e.preventDefault();
-
+  //si tout les champs sont valid et que le panier contient au moins un produit
   if (
     validFisrtName(form.firstName) &&
     validLastName(form.lastName) &&
     validAddress(form.address) &&
     validCity(form.city) &&
-    validEmail(form.email)
+    validEmail(form.email) &&
+    panier.length > 0
   ) {
+    //creation d'un objet contact
     const contact = {
       firstName: document.getElementById("firstName").value,
       lastName: document.getElementById("lastName").value,
@@ -234,20 +233,21 @@ boutonForm.addEventListener("click", (e) => {
       city: document.getElementById("city").value,
       email: document.getElementById("email").value,
     };
-
+    //envoie de cet objet dans le LS
     localStorage.setItem("contact", JSON.stringify(contact));
-    console.log(localStorage);
 
+    //creation d'un tableau produit avec son ID
     const products = [];
     for (let i = 0; i < panier.length; i++) {
       products.push(panier[i].id);
     }
 
+    //Données à envoyer au serveur
     const formulairePlusPanier = {
       contact,
       products,
     };
-
+    //options de l'envoie fetch avec la methode POST
     const options = {
       method: "POST",
       body: JSON.stringify(formulairePlusPanier),
@@ -260,15 +260,22 @@ boutonForm.addEventListener("click", (e) => {
     fetch("http://localhost:3000/api/products/order", options)
       .then((result) => result.json())
       .then((data) => {
+        //envoie de l'orderID dans le local storage
         localStorage.setItem("orderId", data.orderId);
+        //redirection sur la page de confirmation
         window.location = "confirmation.html";
       })
-
+      //si la promesse ne fonctionne pas on récupère l'erreur en l'ajoutant dynamiquement
       .catch(function (err) {
         console.dir(err);
-        alert(
-          "Une erreur est survenue, veuillez nous excuser pour la gêne occasionnée"
-        );
+        let newElt = document.createElement("div");
+        document.querySelector("#emailErrorMsg").appendChild(newElt);
+        newElt.innerHTML = `<br><h3>Une erreur est survenue lors de la commande, veuillez nous excuser pour la gêne occasionnée</h3>`;
       });
+  } else {
+    //ajouter un commentaire dynamiquement si les champs ne sont pas correctement remplis
+    let newElt = document.createElement("div");
+    document.querySelector("#emailErrorMsg").appendChild(newElt);
+    newElt.innerHTML = `<br><h3>veuillez renseigner les champs correctement ou ajouter un produit dans votre panier</h3>`;
   }
 });
