@@ -33,7 +33,7 @@ fetch(productURL)
   .catch(function (err) {
     console.dir(err);
     document.querySelector(
-      ".item"
+      ".item__content"
     ).innerHTML = `<h3>Nous n'avons pas réussi à aficher le produit demandé, veuillez nous excuser pour la gêne occasionnée</h3>`;
   });
 
@@ -45,6 +45,7 @@ function clicAddBasket() {
     let select = document.getElementById("colors").value;
     let qty = parseInt(document.getElementById("quantity").value);
     let identifiant = id;
+    console.log(select)
     //défini le produit qui ira dans le panier
     let produitChoisi = {
       id: identifiant,
@@ -52,6 +53,7 @@ function clicAddBasket() {
       colori: select,
       quantite: qty,
     };
+    if (qty>0 && qty<101){
     //enregistrer le panier dans le local storage
     function saveBasket(basket) {
       localStorage.setItem("basket", JSON.stringify(basket));
@@ -92,5 +94,7 @@ function clicAddBasket() {
       .appendChild(newElt);
     newElt.innerHTML = `<br><h3>Le produit a été correctement ajouté au panier</h3>`;
     // alert("Le produit a été correctement ajouté au panier");
-  });
+  }else{
+    alert("veuillez sélectionner une quantité entre 1 et 100");
+  }})
 }

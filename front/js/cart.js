@@ -48,7 +48,14 @@ if (panier === null || panier == 0 || panier == undefined) {
         //ajout des fonctions pour pouvoir supprimer ou modifier un produit
         supprimerUnProduit();
         modificationQuantite();
-      });
+      })
+      .catch(function (err) {
+        console.dir(err);
+        document.querySelector(
+          "#cart__items"
+        ).innerHTML = `<h3>Nous n'avons pas réussi à aficher les produits, veuillez nous excuser pour la gêne occasionnée</h3>`;
+      })
+      
   }
 }
 
