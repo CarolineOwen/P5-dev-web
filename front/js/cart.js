@@ -54,8 +54,7 @@ if (panier === null || panier == 0 || panier == undefined) {
         document.querySelector(
           "#cart__items"
         ).innerHTML = `<h3>Nous n'avons pas réussi à aficher les produits, veuillez nous excuser pour la gêne occasionnée</h3>`;
-      })
-      
+      });
   }
 }
 
@@ -74,16 +73,11 @@ function totalQuantite() {
 //fonction pour supprimer un produit du panier
 function supprimerUnProduit() {
   let supprimer = document.querySelectorAll(".deleteItem");
-  console.log(supprimer);
-
   for (let l = 0; l < supprimer.length; l++) {
     supprimer[l].addEventListener("click", (event) => {
       event.preventDefault();
-      console.log("coucou");
       let supprimerId = panier[l].idAndColor;
-      console.log(supprimerId);
       panier = panier.filter((el) => el.idAndColor !== supprimerId);
-      console.log(panier);
       localStorage.setItem("basket", JSON.stringify(panier));
       location.reload();
     });
@@ -93,20 +87,20 @@ function supprimerUnProduit() {
 //fonction pour modifier la quantité d'un produit dans le panier
 function modificationQuantite() {
   let plus = document.querySelectorAll(".itemQuantity");
-  console.log(plus);
-
   for (let p = 0; p < plus.length; p++) {
     plus[p].addEventListener("change", (event) => {
       event.preventDefault();
       let plusId = panier[p].quantite;
-      console.log(plusId);
       let plusModifQty = plus[p].value;
-      console.log(plusModifQty);
-      const resultFind = panier.find((el) => el.plusModifQty !== plusId);
-      resultFind.quantite = plusModifQty;
-      panier[p].quantite = resultFind.quantite;
-      localStorage.setItem("basket", JSON.stringify(panier));
-      location.reload();
+      if (plusModifQty > 0 && plusModifQty < 101) {
+        const resultFind = panier.find((el) => el.plusModifQty !== plusId);
+        resultFind.quantite = plusModifQty;
+        panier[p].quantite = resultFind.quantite;
+        localStorage.setItem("basket", JSON.stringify(panier));
+        location.reload();
+      } else {
+        alert("veuillez sélectionner une quantité entre 1 et 100");
+      }
     });
   }
 }

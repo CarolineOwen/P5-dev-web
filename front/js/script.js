@@ -6,7 +6,7 @@ fetch("http://localhost:3000/api/products")
 
   // récupération de la réponse en la parcourant pour insérer les éléments de manière dynamique dans le DOM
   .then((tab) => {
-    // à chaque tour de boucles création de chaque canapé
+    // à chaque tour de boucle création de chaque canapé
     for (let product of tab) {
       document.getElementById(
         "items"
