@@ -1,6 +1,8 @@
 // récupérer les produits du local storage
 let panier = JSON.parse(localStorage.getItem("basket"));
 
+console.log(panier);
+
 let total = 0;
 //si le panier est vide, un message indique à l'utilisateur d'ajouter un article au panier
 if (panier === null || panier == 0 || panier == undefined) {
@@ -32,7 +34,7 @@ if (panier === null || panier == 0 || panier == undefined) {
     <div class="cart__item__content__settings__quantity">
       <p>Qté : </p>
       <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${i.quantite}">
-      
+
     </div>
     <div class="cart__item__content__settings__delete">
       <p class="deleteItem">Supprimer</p>
@@ -90,10 +92,10 @@ function modificationQuantite() {
   for (let p = 0; p < plus.length; p++) {
     plus[p].addEventListener("change", (event) => {
       event.preventDefault();
-      let plusId = panier[p].quantite;
       let plusModifQty = plus[p].value;
       if (plusModifQty > 0 && plusModifQty < 101) {
-        const resultFind = panier.find((el) => el.plusModifQty !== plusId);
+        const resultFind = panier.find((el) => el.idAndColor == panier[p].idAndColor);
+        console.log(resultFind);
         resultFind.quantite = plusModifQty;
         panier[p].quantite = resultFind.quantite;
         localStorage.setItem("basket", JSON.stringify(panier));

@@ -49,7 +49,7 @@ function clicAddBasket() {
       colori: select,
       quantite: qty,
     };
-    if (qty > 0 && qty < 101) {
+    if (qty > 0 && qty < 101 && select != '') {
       //enregistrer le panier dans le local storage
       function saveBasket(basket) {
         localStorage.setItem("basket", JSON.stringify(basket));
@@ -91,7 +91,7 @@ function clicAddBasket() {
       newElt.innerHTML = `<br><h3>Le produit a été correctement ajouté au panier</h3>`;
       // alert("Le produit a été correctement ajouté au panier");
     } else {
-      alert("veuillez sélectionner une quantité entre 1 et 100");
+      alert("veuillez sélectionner une quantité entre 1 et 100 ou choisir une couleur");
     }
   });
 }
